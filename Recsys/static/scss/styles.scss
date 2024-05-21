@@ -1,0 +1,36 @@
+.content {    
+    min-height: 1000px;
+    background: linear-gradient(to bottom right, 
+        rgba(0,0,0,0.9), 
+        rgba(0,0,0,0.9)), 
+        url(../images/header-background.jpg) 
+        center center no-repeat;
+
+    background-size: cover;
+}
+
+
+.card-img-top {
+    width: 100%;
+    height: 12rem;
+    object-fit: cover; 
+}
+
+.genre-title {
+    font-size: 15px;
+}
+.genre {
+    font-size: 13px;
+}
+
+.card {
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .card {
+        width: 50%; /* 75% width of the column */
+        margin: auto; /* Center the card horizontally */
+        margin-bottom: 1rem;
+    }
+}

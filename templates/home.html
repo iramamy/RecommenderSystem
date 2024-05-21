@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <section class="content">
+        <header>
+        <div class="container pt-7">
+            <div class="text-center">
+            <h1 class="text-white">Choose your movie</h1>
+            <div class="input-group rounded-5 bg-light">
+                <div class="input-group-text border-0 rounded-5 bg-light">
+                <i class="fas fa-search"></i>
+                </div>
+                <input
+                type="search"
+                class="form-control border-0 shadow-none text-black fw-bold"
+                placeholder="Search for your best movie"
+                />
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+            </div>
+        </div>
+        </header>
+
+        <!-- Liked movie -->
+    <div class="liked mt-3">
+      <div class="container">
+        <h2 class="text-white fw-bold">Your movie</h2>
+        <div class="row">
+
+          {% for i in range_list%}
+          <div class="col-md-2">
+            <div class="card position-relative">
+              <img class="card-img-top" src="{% static 'images/05.jpg' %}" alt="Card image cap">
+              <div class="card-body lh-1">
+                <h6 class="card-title genre-title"><a href="#" class="stretched-link">Genre</a></h6>
+                <p class="card-text genre">Some quick example text to </p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          
+
+          
+    <!-- // Liked movie -->
+
+    <!-- recommended -->
+    <div class="recommended">
+      <div class="container">
+        <h2 class="text-white fw-bold my-5">Recommended for you</h2>
+        <div class="row">
+
+            
+          {% for i in range_list_1 %}
+          <div class="col-md-2">
+            <div class="card position-relative">
+              <img class="card-img-top" src="{% static 'images/05.jpg' %}" alt="Card image cap">
+              <div class="card-body lh-1">
+                <h6 class="card-title genre-title"><a href="#" class="stretched-link">Genre</a></h6>
+                <p class="card-text genre">Some quick example text to </p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+    <!-- // recommended -->
+
+    <!-- pagination -->
+    <section>
+      <div class="container">
+        <div class="d-flex justify-content-center">
+          <nav aria-label="">
+            <ul class="pagination mb-0">
+              <li class="page-item"><a class="page-link" href="#"><i class="fa-solid fa-arrow-left"></i></a></li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#"><i class="fa-solid fa-arrow-right"></i></a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </section>
+    <!-- // pagination -->
+
+  </section>
+
+{% endblock %}
