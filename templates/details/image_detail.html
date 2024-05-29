@@ -1,0 +1,75 @@
+{% extends 'base.html'%} 
+{% load static %} 
+{% block content %}
+
+
+<section class="content">
+    <div class="container pt-7">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <img src="{{ images.image }}" class="img-fluid img-md">
+                        </div>
+                        <div class="col-md-6 p-4">
+                            <div class="d-flex flex-column">
+                                <p><span class="fw-bold">Title</span>: title here</p>
+                                <p><span class="fw-bold">Genre</span>: genre here</p>
+                                <p><span class="fw-bold">Ratings</span>: genre here</p>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="liked mt-5">
+        <div class="container">
+          <h2 class="text-white fw-bold mb-5">Recommended for you</h2>
+          <div class="row">
+            
+              {% for image in top_12_images %}
+              <div class="col-md-2 mb-0">
+                <div class="card position-relative">
+                  <img class="card-img-top" src="{{ image.image  }}" alt="Card image cap">
+                  <div class="card-body lh-1">
+                    <h6 class="card-title genre-title"><a href="{% url 'image_detail' image_id=image.item_id %}" class="stretched-link">Genre</a></h6>
+                    <p class="card-text genre">Some quick example text to </p>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+  
+            </div>
+        </div>
+    </div>
+
+
+    <div class="liked mt-5">
+        <div class="container">
+          <h2 class="text-white fw-bold mb-5">Want something new?</h2>
+          <div class="row">
+            
+              {% for image in top_6_images %}
+              <div class="col-md-2 mb-0">
+                <div class="card position-relative">
+                  <img class="card-img-top" src="{{ image.image  }}" alt="Card image cap">
+                  <div class="card-body lh-1">
+                    <h6 class="card-title genre-title"><a href="{% url 'image_detail' image_id=image.item_id %}" class="stretched-link">Genre</a></h6>
+                    <p class="card-text genre">Some quick example text to </p>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+  
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

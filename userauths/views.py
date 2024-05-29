@@ -1,18 +1,50 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth, messages
+from django.core.paginator import Paginator
+
+
 from .forms import UserRegisterForm
 from .models import UserAccount
 
-
+import pandas as pd
 
 
 def explore(request):
+    path = 'userauths/data/images.csv'
+    data = pd.read_csv(path)
+
+    top_6 = data.sample(6).to_dict('records')
+    top_12 = data.sample(200).to_dict('records')
+
+    paginator = Paginator(top_12, 12)
+    page = request.GET.get('page')
+    image_per_page = paginator.get_page(page)
+    
+
     context = {
-        'range_list': range(6),
-        'range_list_1': range(12)
+        'image_url_6': top_6,
+        'images': image_per_page
     }
 
     return render(request, 'home.html', context)
+
+
+
+def image_detail(request, image_id):
+    path = 'userauths/data/images.csv'
+    data = pd.read_csv(path)
+    image_data = data[data['item_id'] == image_id].iloc[0]
+
+    top_12 = data.sample(12).to_dict('records')
+    top_6 = data.sample(6).to_dict('records')
+
+    context = {
+        'top_6_images': top_6,
+        'top_12_images': top_12,
+        'images': image_data
+    }
+
+    return render(request, 'details/image_detail.html', context)
 
 
 def register(request):
@@ -67,3 +99,4 @@ def logout(request):
     messages.success(request, 'You are now logged out!')
 
     return redirect('login')
+
