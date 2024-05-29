@@ -7,7 +7,9 @@
         <header>
         <div class="container pt-7">
             <div class="text-center">
-            <h1 class="text-white">Choose your movie</h1>
+            <h1 class="text-white mb-4">Welcome</h1>
+
+            {% include 'includes/alerts.html' %}
             <div class="input-group rounded-5 bg-light">
                 <div class="input-group-text border-0 rounded-5 bg-light">
                 <i class="fas fa-search"></i>
@@ -24,23 +26,27 @@
         </header>
 
         <!-- Liked movie -->
-    <div class="liked mt-3">
+    <div class="liked mt-5">
       <div class="container">
-        <h2 class="text-white fw-bold">Your movie</h2>
+        <h2 class="text-white fw-bold mb-5">Best movie of the week</h2>
         <div class="row">
-
-          {% for i in range_list%}
-          <div class="col-md-2">
-            <div class="card position-relative">
-              <img class="card-img-top" src="{% static 'images/05.jpg' %}" alt="Card image cap">
-              <div class="card-body lh-1">
-                <h6 class="card-title genre-title"><a href="#" class="stretched-link">Genre</a></h6>
-                <p class="card-text genre">Some quick example text to </p>
+          
+            {% for i in range_list%}
+            <div class="col-md-2 mb-0">
+              <div class="card position-relative">
+                <img class="card-img-top" src="{% static 'images/05.jpg' %}" alt="Card image cap">
+                <div class="card-body lh-1">
+                  <h6 class="card-title genre-title"><a href="#" class="stretched-link">Genre</a></h6>
+                  <p class="card-text genre">Some quick example text to </p>
+                </div>
               </div>
             </div>
-          </div>
-          {% endfor %}
-          
+            {% endfor %}
+
+        </div>
+      </div>
+    </div>
+        
 
           
     <!-- // Liked movie -->
@@ -48,9 +54,8 @@
     <!-- recommended -->
     <div class="recommended">
       <div class="container">
-        <h2 class="text-white fw-bold my-5">Recommended for you</h2>
+        <h2 class="text-white fw-bold mt-3 mb-5">Recommended for you</h2>
         <div class="row">
-
             
           {% for i in range_list_1 %}
           <div class="col-md-2">

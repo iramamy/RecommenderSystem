@@ -23,8 +23,8 @@
 
 @media (max-width: 768px) {
   .card {
-    width: 50%; /* 75% width of the column */
-    margin: auto; /* Center the card horizontally */
+    width: 50%;
+    margin: auto;
     margin-bottom: 1rem;
   }
 }

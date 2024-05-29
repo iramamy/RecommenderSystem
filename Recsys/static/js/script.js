@@ -11,3 +11,10 @@ function userScroll() {
   }
   
   document.addEventListener('DOMContentLoaded', userScroll);
+
+
+
+// Message
+setTimeout(function(){
+  $("#message").fadeOut('slow')
+}, 10000);
