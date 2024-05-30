@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 
 from .forms import UserRegisterForm
 from .models import UserAccount
+from review.models import UserReview
 
 import pandas as pd
 
@@ -30,18 +31,34 @@ def explore(request):
 
 
 
-def image_detail(request, image_id):
+def image_detail(request, movie_id):
     path = 'userauths/data/images.csv'
     data = pd.read_csv(path)
-    image_data = data[data['item_id'] == image_id].iloc[0]
+    image_data = data[data['item_id'] == movie_id].iloc[0]
 
     top_12 = data.sample(12).to_dict('records')
     top_6 = data.sample(6).to_dict('records')
 
+    try:
+        user_review = UserReview.objects.get(
+            user__id=request.user.id,
+            movieId=movie_id
+        )
+        user_rating = user_review.rating
+        is_exist = True
+
+    except UserReview.DoesNotExist:
+        is_exist = False
+        user_rating = None
+
+    print("USER RATING IS:", user_rating)
+
     context = {
         'top_6_images': top_6,
         'top_12_images': top_12,
-        'images': image_data
+        'images': image_data,
+        'is_exist': is_exist,
+        'user_rating': user_rating,
     }
 
     return render(request, 'details/image_detail.html', context)

@@ -28,15 +28,15 @@
         <!-- Liked movie -->
     <div class="liked mt-5">
       <div class="container">
-        <h2 class="text-white fw-bold mb-5">Best movie of the week</h2>
+        <h2 class="text-white fw-bold mb-5 title">Best movie of the week</h2>
         <div class="row">
           
             {% for image in image_url_6 %}
-            <div class="col-md-2 mb-0">
+            <div class="col-md-2 col-sm-4 mb-0">
               <div class="card position-relative">
                 <img class="card-img-top" src="{{ image.image  }}" alt="Card image cap">
                 <div class="card-body lh-1">
-                  <h6 class="card-title genre-title"><a href="{% url 'image_detail' image_id=image.item_id %}" class="stretched-link">Genre</a></h6>
+                  <h6 class="card-title genre-title"><a href="{% url 'image_detail' movie_id=image.item_id %}" class="stretched-link">Genre</a></h6>
                   <p class="card-text genre">Some quick example text to </p>
                 </div>
               </div>
@@ -53,16 +53,16 @@
 
     <div class="recommended">
       <div class="container">
-        <h2 class="text-white fw-bold mt-3 mb-5">All movies</h2>
+        <h2 class="text-white fw-bold mt-3 mb-5 title">All movies</h2>
         <div class="row">
 
           {% for image in images %}
-          <div class="col-md-2">
+          <div class="col-md-2 col-sm-4">
             <div class="card position-relative">
                 <img class="card-img-top" src="{{ image.image }}" alt="Card">
               <div class="card-body lh-1">
                 <h6 class="card-title genre-title">
-                  <a href="{% url 'image_detail' image_id=image.item_id %}" class="stretched-link">Genre</a>
+                  <a href="{% url 'image_detail' movie_id=image.item_id %}" class="stretched-link">Genre</a>
                 </h6>
                 <p class="card-text genre">Some quick example text to </p>
               </div>

@@ -7,17 +7,101 @@
     <div class="container pt-7">
         <div class="row">
             <div class="col-md-6 offset-md-3">
+
+              {% include 'includes/alerts.html' %}
+
                 <div class="card">
 
                     <div class="row">
-                        <div class="col-md-6 col-sm-12">
-                            <img src="{{ images.image }}" class="img-fluid img-md">
+
+                        <div class="col-md-6">
+                            <img src="{{ images.image }}" class="img-fluid img-detail">
                         </div>
-                        <div class="col-md-6 p-4">
+                        <div class="col-md-6 p-4 image_detail">
+                            <div class="rating">
+                              <p class="mb-3">
+                                <span>Rating</span>
+                              </p>
+                            </div>
                             <div class="d-flex flex-column">
-                                <p><span class="fw-bold">Title</span>: title here</p>
-                                <p><span class="fw-bold">Genre</span>: genre here</p>
-                                <p><span class="fw-bold">Ratings</span>: genre here</p>
+                                <p class="mb-0"><span class="fw-bold">Title</span>: title here</p>
+                                <p class="mb-0"><span class="fw-bold">Genre</span>: genre here</p>
+                                <p class="mb-0"><span class="fw-bold">Ratings</span>: genre here</p>
+                            </div>
+                            <div class="text-center mt-5 d-flex flex-column">
+                              <form action="{% url 'submitrating' images.item_id %}" method="POST">
+                                {% csrf_token %}
+
+                                <!-- <div class="d-flex flex-column"> -->
+                                  <div>
+                                    <label>
+                                      {% if is_exist %}
+                                      <span class="fw-bold">Your rating</span>
+                                        <span>({{ user_rating }})</span>
+                                      {% else %}
+                                      <span class="fw-bold">Rate</span>
+                                      {% endif %}
+                                    </label>
+                                  </div>
+                                  
+                                  <div class="rate text-left">
+                                    <input type="radio" name="rating" id="rating10" value="5" required>
+                                    <label for="rating10" title="5"></label>
+  
+                                    <input type="radio" name="rating" id="rating9" value="4.5" required>
+                                    <label for="rating9" title="4.5" class="half"></label>
+  
+                                    <input type="radio" name="rating" id="rating8" value="4" required>
+                                    <label for="rating8" title="4"></label>
+  
+                                    <input type="radio" name="rating" id="rating7" value="3.5" required>
+                                    <label for="rating7" title="3.5"  class="half"></label>
+  
+                                    <input type="radio" name="rating" id="rating6" value="3" required>
+                                    <label for="rating6" title="3"></label>
+  
+                                    <input type="radio" name="rating" id="rating5" value="2.5" required>
+                                    <label for="rating5" title="2.5"  class="half"></label>
+  
+                                    <input type="radio" name="rating" id="rating4" value="2" required>
+                                    <label for="rating4" title="2"></label>
+  
+                                    <input type="radio" name="rating" id="rating3" value="1.5" required>
+                                    <label for="rating3" title="1.5"  class="half"></label>
+  
+                                    <input type="radio" name="rating" id="rating2" value="1" required>
+                                    <label for="rating2" title="1"></label>
+  
+                                    <input type="radio" name="rating" id="rating1" value="0.5" required>
+                                    <label for="rating1" title="0.5" class="half"></label>
+  
+                                  </div>
+
+                                <!-- </div> -->
+                                  <div>
+                                  
+                                    {% if request.user.is_authenticated %}
+                                      {% if is_exist %}
+
+                                        <button class="btn btn-outline-dark" type="submit">
+                                          Change
+                                        </button>
+                                      
+                                      {% else %}
+                                        
+                                        <button class="btn btn-outline-dark" type="submit">
+                                          Submit
+                                        </button>
+
+                                      {% endif %}
+                                    {% else %}
+                                      <span>
+                                        Please <a href="{% url 'login' %}">Login</a>
+                                      </span>
+                                    {% endif %}
+
+                                  </div>
+                              </form>
                             </div>
                         </div>
                     </div>
@@ -29,7 +113,7 @@
 
     <div class="liked mt-5">
         <div class="container">
-          <h2 class="text-white fw-bold mb-5">Recommended for you</h2>
+          <h2 class="text-white fw-bold mb-5 title">Recommended for you</h2>
           <div class="row">
             
               {% for image in top_12_images %}
@@ -37,7 +121,7 @@
                 <div class="card position-relative">
                   <img class="card-img-top" src="{{ image.image  }}" alt="Card image cap">
                   <div class="card-body lh-1">
-                    <h6 class="card-title genre-title"><a href="{% url 'image_detail' image_id=image.item_id %}" class="stretched-link">Genre</a></h6>
+                    <h6 class="card-title genre-title"><a href="{% url 'image_detail' movie_id=image.item_id %}" class="stretched-link">Genre</a></h6>
                     <p class="card-text genre">Some quick example text to </p>
                   </div>
                 </div>
@@ -51,7 +135,7 @@
 
     <div class="liked mt-5">
         <div class="container">
-          <h2 class="text-white fw-bold mb-5">Want something new?</h2>
+          <h2 class="text-white fw-bold mb-5 title">Want something new?</h2>
           <div class="row">
             
               {% for image in top_6_images %}
@@ -59,7 +143,7 @@
                 <div class="card position-relative">
                   <img class="card-img-top" src="{{ image.image  }}" alt="Card image cap">
                   <div class="card-body lh-1">
-                    <h6 class="card-title genre-title"><a href="{% url 'image_detail' image_id=image.item_id %}" class="stretched-link">Genre</a></h6>
+                    <h6 class="card-title genre-title"><a href="{% url 'image_detail' movie_id=image.item_id %}" class="stretched-link">Genre</a></h6>
                     <p class="card-text genre">Some quick example text to </p>
                   </div>
                 </div>
