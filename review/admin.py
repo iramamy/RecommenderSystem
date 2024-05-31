@@ -15,4 +15,6 @@ class UserReviewAdmin(admin.ModelAdmin):
         'movieId',
     ]
 
+    list_filter = ['user',]
+
 admin.site.register(UserReview, UserReviewAdmin)

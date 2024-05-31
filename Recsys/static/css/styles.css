@@ -84,6 +84,18 @@ label:hover ~input:checked ~ label {
   color: #cc9000;
 }
 
+
+.star-rating i {
+  color: #ffb503;
+}
+
+.all-movies {
+  text-decoration: none;
+}
+
+.all-movies:hover{
+  font-size: 21px !important;
+}
 @media (max-width: 768px) {
   .card {
     max-width: 60%;

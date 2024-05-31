@@ -8,4 +8,5 @@ urlpatterns = [
         views.submitrating, 
         name='submitrating'
         ),
+    path('myratedmovie/', views.myratedmovie, name='myratedmovie')
 ]
