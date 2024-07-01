@@ -8,6 +8,7 @@ class UserReview(models.Model):
         on_delete=models.SET_NULL, 
         null=True
     )
+
     movieId = models.CharField(max_length=6)
     rating = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)

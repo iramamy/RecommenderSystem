@@ -1,124 +1,129 @@
 {% extends 'base.html' %}
-
 {% load static %}
-
 {% block content %}
-  <section class="content">
-        <header>
-        <div class="container pt-7">
-            <div class="text-center">
-            <h1 class="text-white mb-4">Welcome</h1>
+<section class="content">
+  <header>
+    <div class="container pt-7">
+      <div class="text-center">
+        <h1 class="text-white mb-4">Welcome</h1>
 
-            {% include 'includes/alerts.html' %}
-            <div class="input-group rounded-5 bg-light">
-                <div class="input-group-text border-0 rounded-5 bg-light">
-                <i class="fas fa-search"></i>
-                </div>
-                <input
-                type="search"
-                class="form-control border-0 shadow-none text-black fw-bold"
-                placeholder="Search for your best movie"
-                />
-                <button class="btn btn-primary" type="submit">Search</button>
-            </div>
-            </div>
-        </div>
-        </header>
-
-        <!-- Liked movie -->
-    <div class="liked mt-5">
-      <div class="container">
-        <h2 class="text-white fw-bold mb-5 title">Best movie of the week</h2>
-        <div class="row">
-          
-            {% for image in image_url_6 %}
-            <div class="col-md-2 col-sm-4 mb-0">
-              <div class="card position-relative">
-                <img class="card-img-top" src="{{ image.image  }}" alt="Card image cap">
-                <div class="card-body lh-1">
-                  <h6 class="card-title genre-title"><a href="{% url 'image_detail' movie_id=image.item_id %}" class="stretched-link">Genre</a></h6>
-                  <p class="card-text genre">Some quick example text to </p>
-                </div>
-              </div>
-            </div>
-            {% endfor %}
-
+        {% include 'includes/alerts.html' %}
+        <div class="input-group rounded-5 bg-light">
+          <div class="input-group-text border-0 rounded-5 bg-light">
+            <i class="fas fa-search"></i>
+          </div>
+          <input
+            type="search"
+            class="form-control border-0 shadow-none text-black fw-bold"
+            placeholder="Search for your best movie"
+          />
+          <button class="btn btn-primary" type="submit">Search</button>
         </div>
       </div>
     </div>
-        
+  </header>
 
-          
-    <!-- // Liked movie -->
-
-    <div class="recommended">
-      <div class="container">
-        <h2 class="text-white fw-bold mt-3 mb-5 title">All movies</h2>
-        <div class="row">
-
-          {% for image in images %}
-          <div class="col-md-2 col-sm-4">
-            <div class="card position-relative">
-                <img class="card-img-top" src="{{ image.image }}" alt="Card">
-              <div class="card-body lh-1">
-                <h6 class="card-title genre-title">
-                  <a href="{% url 'image_detail' movie_id=image.item_id %}" class="stretched-link">Genre</a>
-                </h6>
-                <p class="card-text genre">Some quick example text to </p>
-              </div>
+  <!-- Liked movie -->
+  <div class="liked mt-5">
+    <div class="container">
+      <h2 class="text-white fw-bold mb-5 title">New movie</h2>
+      <div class="row">
+        {% for image in new_top_6 %}
+        <div class="col-md-2 col-sm-4 mb-0">
+          <div class="card position-relative">
+            <img
+              class="card-img-top"
+              src="https://raw.githubusercontent.com/iramamy/Movie-lens-images/main/images/{{ image.item_id }}.jpg"
+              alt="Not available"
+            />
+            <div class=" px-2 py-3 lh-1">
+              <a
+                href="{% url 'image_detail' movie_id=image.item_id %}"
+                class="stretched-link text-decoration-none genre-title"
+                >{{ image.genres}}</a
+              >
             </div>
           </div>
-          {% endfor %}
-
         </div>
+        {% endfor %}
       </div>
     </div>
-    
+  </div>
+  <!-- // Liked movie -->
 
-    <!-- pagination -->
-    <section>
-      <div class="container">
-        <div class="d-flex justify-content-center">
-          <nav aria-label="">
-            {% if images.has_other_pages %}
-            <ul class="pagination mb-0">
-                
-              <!-- previous button -->
-              {% if images.has_previous %}
-                <li class="page-item">
-                  <a class="page-link" href="?page={{images.previous_page_number}}">
-                    <i class="fa-solid fa-arrow-left"></i>
-                  </a>
-                </li>
-              {% endif %}
-              <!-- // previous button -->
 
-              <!-- Page number -->
-              {% for p in images.paginator.page_range %}
-                {% if images.number == p%}
-                  <li class="page-item active"><a class="page-link" href="#">{{p}}</a></li>
-                  {% elif p > images.number|add:'-3' and p < images.number|add:'3' %}
-                  <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
-                  {% endif %}
-              {% endfor %}
-              <!-- Page number -->
-
-              {% if images.has_next %}
-              <li class="page-item">
-                <a class="page-link" href="?page={{images.next_page_number}}">
-                  <i class="fa-solid fa-arrow-right"></i>
-                </a>
-              </li>
-              {% endif %}
-
-            </ul>
-            {% endif %}
-          </nav>
+  <!-- All movies -->
+  <div class="recommended">
+    <div class="container">
+      <h2 class="text-white fw-bold mt-3 mb-5 title">All movies</h2>
+      <div class="row">
+        {% for image in images %}
+        <div class="col-md-2 col-sm-4">
+          <div class="card position-relative">
+            <img
+              class="card-img-top"
+              src="https://raw.githubusercontent.com/iramamy/Movie-lens-images/main/images/{{ image.item_id }}.jpg"
+              alt="Card" />
+            <div class=" px-2 py-3 lh-1">
+              <a
+                href="{% url 'image_detail' movie_id=image.item_id %}"
+                class="stretched-link text-decoration-none genre-title"
+                >{{ image.genres}}</a
+              >
+            </div>
+          </div>
         </div>
+        {% endfor %}
       </div>
-    </section>
-    <!-- // pagination -->
+    </div>
+  </div>
+  <!-- // All movies -->
 
+  <!-- pagination -->
+  <section>
+    <div class="container">
+      <div class="d-flex justify-content-center">
+        <nav aria-label="">
+          {% if images.has_other_pages %}
+          <ul class="pagination mb-0">
+            <!-- previous button -->
+            {% if images.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{images.previous_page_number}}">
+                <i class="fa-solid fa-arrow-left"></i>
+              </a>
+            </li>
+            {% endif %}
+            <!-- // previous button -->
+
+            <!-- Page number -->
+            {% for p in images.paginator.page_range %}
+            {% if images.number == p%}
+            <li class="page-item active">
+              <a class="page-link" href="#">{{p}}</a>
+            </li>
+            {% elif p > images.number|add:'-3' and p < images.number|add:'3' %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            <!-- Page number -->
+
+            {% if images.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{images.next_page_number}}">
+                <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+          {% endif %}
+        </nav>
+      </div>
+    </div>
   </section>
+  <!-- // pagination -->
+</section>
 
 {% endblock %}

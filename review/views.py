@@ -46,22 +46,35 @@ def myratedmovie(request):
         user=request.user
     )
 
-    data = pd.read_csv('./userauths/data/images.csv')
-    top_6 = data.sample(6).to_dict('records')
-    url_mapping = dict(zip(data['item_id'], data['image']))
+    path = 'userauths/data/movies.dat'
+    column_names = ['item_id', 'title', 'genres']
 
-    IdWithUrls = []
+    data = pd.read_csv(
+        path,
+        sep='::',
+        engine='python',
+        header=None,
+        names=column_names,
+        encoding='latin1'
+        )
+
+    data['genres'] = data['genres'].str.replace('|', ', ')
+
+    top_6 = data.sample(6).to_dict('records')
+    genre_mapping = dict(zip(data['item_id'], data['genres']))
+
+    IdWithGenres = []
     for rated_movie in rated_movies:
-        movieUrl = url_mapping.get(int(rated_movie.movieId))
+        movieGenre = genre_mapping.get(int(rated_movie.movieId))
         rating = rated_movie.rating
-        IdWithUrls.append({
-            'movieUrl': movieUrl,
+        IdWithGenres.append({
+            'genres': movieGenre,
             'rating': rating,
             'movieId': int(rated_movie.movieId),
         })
 
     context = {
-        'IdWithUrls': IdWithUrls,
+        'IdWithGenres': IdWithGenres,
         'top_6': top_6,
     }
 

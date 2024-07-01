@@ -14,7 +14,7 @@
 }
 
 .genre-title {
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .genre {
@@ -84,7 +84,14 @@ label:hover ~input:checked ~ label {
   color: #cc9000;
 }
 
+/* Explore card */
+.card {
+  min-height: 310px !important;
+}
 
+.history .card {
+  min-height: 330px !important;
+}
 .star-rating i {
   color: #ffb503;
 }

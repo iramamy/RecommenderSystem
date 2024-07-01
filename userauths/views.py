@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib import auth, messages
 from django.core.paginator import Paginator
 
-
 from .forms import UserRegisterForm
 from .models import UserAccount
 from review.models import UserReview
@@ -11,29 +10,53 @@ import pandas as pd
 
 
 def explore(request):
-    path = 'userauths/data/images.csv'
-    data = pd.read_csv(path)
+
+    path = 'userauths/data/movies.dat'
+    column_names = ['item_id', 'title', 'genres']
+
+    data = pd.read_csv(
+        path,
+        sep='::',
+        engine='python',
+        header=None,
+        names=column_names,
+        encoding='latin1'
+        )
+
+    data['genres'] = data['genres'].str.replace('|', ', ')
 
     top_6 = data.sample(6).to_dict('records')
-    top_12 = data.sample(200).to_dict('records')
+    all_movies = data.to_dict('records')
 
-    paginator = Paginator(top_12, 12)
+    paginator = Paginator(all_movies, 12)
     page = request.GET.get('page')
     image_per_page = paginator.get_page(page)
     
-
     context = {
-        'image_url_6': top_6,
-        'images': image_per_page
+        'new_top_6': top_6,
+        'images': image_per_page,
+        'all_movies': all_movies
     }
 
     return render(request, 'home.html', context)
 
 
-
 def image_detail(request, movie_id):
-    path = 'userauths/data/images.csv'
-    data = pd.read_csv(path)
+
+    path = 'userauths/data/movies.dat'
+    column_names = ['item_id', 'title', 'genres']
+
+    data = pd.read_csv(
+        path,
+        sep='::',
+        engine='python',
+        header=None,
+        names=column_names,
+        encoding='latin1'
+        )
+
+    data['genres'] = data['genres'].str.replace('|', ', ')
+    
     image_data = data[data['item_id'] == movie_id].iloc[0]
 
     top_12 = data.sample(12).to_dict('records')
@@ -51,7 +74,6 @@ def image_detail(request, movie_id):
         is_exist = False
         user_rating = None
 
-    print("USER RATING IS:", user_rating)
 
     context = {
         'top_6_images': top_6,
