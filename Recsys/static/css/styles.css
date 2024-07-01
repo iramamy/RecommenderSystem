@@ -87,6 +87,7 @@ label:hover ~input:checked ~ label {
 /* Explore card */
 .card {
   min-height: 310px !important;
+  border-radius: 0 !important;
 }
 
 .history .card {
@@ -103,22 +104,41 @@ label:hover ~input:checked ~ label {
 .all-movies:hover{
   font-size: 21px !important;
 }
+
+/* Toast */
+.modal {
+  border-radius: 0 !important;
+}
+
+
+@media (max-width: 992px) {
+
+  .input-group {
+    width: 100% !important;
+  }
+
+}
+
 @media (max-width: 768px) {
   .card {
-    max-width: 60%;
-    height: auto;
-    margin: auto;
     margin-bottom: 1rem;
   }
 
+  .card {
+    text-align: center !important;
+  }
+
   .card-img-top {
-    width: 25rem;
-    min-height: 12rem;
+    min-height: 30rem !important;
     object-fit: cover;
   }
 
   .title {
     text-align: center;
+  }
+
+  .input-group {
+    width: 100% !important;
   }
 
   

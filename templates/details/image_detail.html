@@ -7,23 +7,24 @@
     <div class="row">
       <div class="col-md-6 offset-md-3">
         {% include 'includes/alerts.html' %}
-
-        <div class="card">
-          <div class="row">
-            <div class="col-md-6">
+        <div class="row g-0">
+          <div class="col-lg-6">
+            <div class="card mb-0">
               <img
                 src="https://raw.githubusercontent.com/iramamy/Movie-lens-images/main/images/{{ images.item_id }}.jpg"
-                class="img-fluid img-detail"
+                class="img-fluid img-detail card-img-top"
                 alt="Not available"
               />
             </div>
-            <div class="col-md-6 p-4 image_detail">
+          </div>
+          <div class="col-lg-6 image_detail d-flex flex-column justify-content-between bg-white">
+            <div class="py-3">
               <div class="rating text-center">
                 <p class="mb-3">
                   <span class="fw-bold"></span>
                 </p>
               </div>
-              <div class="d-flex flex-column">
+              <div class="d-flex flex-column text-center">
                 <p class="mb-0">
                   <span class="fw-bold">Title</span>: {{ images.title }}
                 </p>
@@ -31,8 +32,8 @@
                   <span class="fw-bold">Genre</span>: {{ images.genres }}
                 </p>
                 <!-- <p class="mb-0">
-                  <span class="fw-bold">Ratings</span>: genre here
-                </p> -->
+                    <span class="fw-bold">Ratings</span>: genre here
+                  </p> -->
               </div>
               <div class="text-center mt-5 d-flex flex-column">
                 <form
@@ -48,7 +49,7 @@
                       <span class="fw-bold">Your rating</span>
                       <span>({{ user_rating }})</span>
                       {% else %}
-                      <span class="fw-bold">Rate</span>
+                      <span class="fw-bold">Rate this movie</span>
                       {% endif %}
                     </label>
                   </div>
@@ -159,8 +160,7 @@
                       Submit
                     </button>
 
-                    {% endif %}
-                    {% else %}
+                    {% endif %} {% else %}
                     <span> Please <a href="{% url 'login' %}">Login</a> </span>
                     {% endif %}
                   </div>
@@ -185,7 +185,7 @@
               src="https://raw.githubusercontent.com/iramamy/Movie-lens-images/main/images/{{ image.item_id }}.jpg"
               alt="Not available"
             />
-            <div class=" px-2 py-3 lh-1">
+            <div class="px-2 py-3 lh-1">
               <a
                 href="{% url 'image_detail' movie_id=image.item_id %}"
                 class="stretched-link text-decoration-none genre-title"
@@ -211,7 +211,7 @@
               src="https://raw.githubusercontent.com/iramamy/Movie-lens-images/main/images/{{ image.item_id }}.jpg"
               alt="Not available"
             />
-            <div class=" px-2 py-3 lh-1">
+            <div class="px-2 py-3 lh-1">
               <a
                 href="{% url 'image_detail' movie_id=image.item_id %}"
                 class="stretched-link text-decoration-none genre-title"

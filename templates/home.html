@@ -7,18 +7,30 @@
       <div class="text-center">
         <h1 class="text-white mb-4">Welcome</h1>
 
-        {% include 'includes/alerts.html' %}
-        <div class="input-group rounded-5 bg-light">
-          <div class="input-group-text border-0 rounded-5 bg-light">
-            <i class="fas fa-search"></i>
-          </div>
-          <input
-            type="search"
-            class="form-control border-0 shadow-none text-black fw-bold"
-            placeholder="Search for your best movie"
-          />
-          <button class="btn btn-primary" type="submit">Search</button>
+        <div class="w-75 mx-auto">
+          {% include 'includes/alerts.html' %}
         </div>
+        <form action="{% url 'search' %}" autocomplete="off"  method="GET">
+          <div class="input-group rounded-0 bg-light autocomplete w-75 mx-auto" id="autocomplete">
+            <div class="input-group-text border-0 rounded-0 bg-light">
+              <i class="fas fa-search"></i>
+            </div>
+            <input
+              type="search"
+              class="form-control border-0 shadow-none text-black"
+              placeholder="Search your favorite movie"
+              name="keyword"
+            />
+
+            <ul class="autocomplete-result-list"></ul>
+
+            <button
+              class="btn btn-primary rounded-0"
+              type="text">
+              Search
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </header>
@@ -29,7 +41,7 @@
       <h2 class="text-white fw-bold mb-5 title">New movie</h2>
       <div class="row">
         {% for image in new_top_6 %}
-        <div class="col-md-2 col-sm-4 mb-0">
+        <div class="col-lg-2 col-md-4 col-sm-6 mb-0">
           <div class="card position-relative">
             <img
               class="card-img-top"
@@ -58,7 +70,7 @@
       <h2 class="text-white fw-bold mt-3 mb-5 title">All movies</h2>
       <div class="row">
         {% for image in images %}
-        <div class="col-md-2 col-sm-4">
+        <div class="col-lg-2 col-md-4 col-sm-6">
           <div class="card position-relative">
             <img
               class="card-img-top"
@@ -125,5 +137,23 @@
   </section>
   <!-- // pagination -->
 </section>
+
+<script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+<script>
+    new Autocomplete('#autocomplete', {
+        search: input => {
+            console.log(input);
+            const url = `/auto-search/?keyword=${input}`;
+            return new Promise(resolve => {
+                fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.data)
+                    resolve(data.data);
+                })
+            })
+        }
+    });
+</script>
 
 {% endblock %}

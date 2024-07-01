@@ -1,0 +1,113 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+
+<div class="content">
+  <div class="container pt-7">
+    <!-- All movies -->
+    <div class="recommended">
+      <div class="container">
+        
+        {% if all_movies %}
+        <h2 class="text-white fw-bold mt-3 mb-5 title">Search result</h2>
+        <div class="row">
+          {% for image in all_movies %}
+          <div class="col-md-2 col-sm-4">
+            <div class="card position-relative">
+              <img
+                class="card-img-top"
+                src="https://raw.githubusercontent.com/iramamy/Movie-lens-images/main/images/{{ image.item_id }}.jpg"
+                alt="Not available"
+              />
+              <div class="px-2 py-3 lh-1">
+                <a
+                  href="{% url 'image_detail' movie_id=image.item_id %}"
+                  class="stretched-link text-decoration-none genre-title"
+                  >{{ image.genres }}</a
+                >
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        {% else %}
+        <h2 class="text-white fw-bold mt-3 mb-5 title">Sorry, no movie found!</h2>
+        <h2 class="text-white fw-bold mt-3 mb-5 title">New movie</h2>
+        <div class="row">
+          {% for image in top_6 %}
+          <div class="col-md-2 col-sm-4">
+            <div class="card position-relative">
+              <img
+                class="card-img-top"
+                src="https://raw.githubusercontent.com/iramamy/Movie-lens-images/main/images/{{ image.item_id }}.jpg"
+                alt="Not available"
+              />
+              <div class="px-2 py-3 lh-1">
+                <a
+                  href="{% url 'image_detail' movie_id=image.item_id %}"
+                  class="stretched-link text-decoration-none genre-title"
+                  >{{ image.genres }}</a
+                >
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+          
+      </div>
+    </div>
+    <!-- // All movies -->
+  </div>
+
+  <!-- pagination -->
+  <section>
+    <div class="container">
+      <div class="d-flex justify-content-center">
+        <nav aria-label="">
+          {% if all_movies.has_other_pages %}
+          <ul class="pagination mb-0">
+            <!-- previous button -->
+            {% if all_movies.has_previous %}
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="?keyword={{ keyword }}&page={{all_movies.previous_page_number}}"
+              >
+                <i class="fa-solid fa-arrow-left"></i>
+              </a>
+            </li>
+            {% endif %}
+            <!-- // previous button -->
+
+            <!-- Page number -->
+            {% for p in all_movies.paginator.page_range %} {% if all_movies.number == p%}
+            <li class="page-item active">
+              <a class="page-link" href="#">{{p}}</a>
+            </li>
+            {% elif p > all_movies.number|add:'-3' and p < all_movies.number|add:'3' %}
+            <li class="page-item">
+              <a class="page-link" href="?keyword={{ keyword }}&page={{ p }}">{{ p }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            <!-- Page number -->
+
+            {% if all_movies.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?keyword={{ keyword }}&page={{all_movies.next_page_number}}">
+                <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+          {% endif %}
+        </nav>
+      </div>
+    </div>
+  </section>
+  <!-- // pagination -->
+</div>
+
+{% endblock %}

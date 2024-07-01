@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import auth, messages
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 
 from .forms import UserRegisterForm
 from .models import UserAccount
@@ -9,21 +10,21 @@ from review.models import UserReview
 import pandas as pd
 
 
+path = 'userauths/data/movies.dat'
+column_names = ['item_id', 'title', 'genres']
+
+data = pd.read_csv(
+    path,
+    sep='::',
+    engine='python',
+    header=None,
+    names=column_names,
+    encoding='latin1'
+    )
+
+data['genres'] = data['genres'].str.replace('|', ', ')
+
 def explore(request):
-
-    path = 'userauths/data/movies.dat'
-    column_names = ['item_id', 'title', 'genres']
-
-    data = pd.read_csv(
-        path,
-        sep='::',
-        engine='python',
-        header=None,
-        names=column_names,
-        encoding='latin1'
-        )
-
-    data['genres'] = data['genres'].str.replace('|', ', ')
 
     top_6 = data.sample(6).to_dict('records')
     all_movies = data.to_dict('records')
@@ -42,20 +43,6 @@ def explore(request):
 
 
 def image_detail(request, movie_id):
-
-    path = 'userauths/data/movies.dat'
-    column_names = ['item_id', 'title', 'genres']
-
-    data = pd.read_csv(
-        path,
-        sep='::',
-        engine='python',
-        header=None,
-        names=column_names,
-        encoding='latin1'
-        )
-
-    data['genres'] = data['genres'].str.replace('|', ', ')
     
     image_data = data[data['item_id'] == movie_id].iloc[0]
 
@@ -139,3 +126,38 @@ def logout(request):
 
     return redirect('login')
 
+def search(request):
+    if "keyword" in request.GET:
+        keyword = request.GET.get('keyword', '').strip()
+
+        if keyword:
+            top_6 = data.sample(6).to_dict('records')
+            df_filtered = data[data['title'].str.contains(keyword, case=False, regex=False)]
+            all_movies = df_filtered.to_dict('records')
+
+            paginator = Paginator(all_movies, 12)
+            page = request.GET.get('page')
+            image_per_page = paginator.get_page(page)
+            
+            context = {
+                'all_movies': image_per_page,
+                'keyword': keyword,
+                'top_6': top_6
+            }
+
+            return render(request, 'details/search_result.html', context)
+        
+    return render(request, 'details/search_result.html', {}) 
+
+def auto_complete_search(request):
+    keyword = request.GET.get("keyword", "").strip()
+    df = data[data['title'].str.contains(keyword, case=False, regex=False)]
+
+    json_data = df['title'].to_list()
+    
+    context = {
+        'status': 200,
+        'data': json_data
+    }
+
+    return JsonResponse(context)

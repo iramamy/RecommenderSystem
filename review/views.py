@@ -40,6 +40,7 @@ def submitrating(request, movie_id):
                 return redirect(url)
 
 
+@login_required(login_url='login')
 def myratedmovie(request):
 
     rated_movies = UserReview.objects.filter(
