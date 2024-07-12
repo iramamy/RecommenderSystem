@@ -10,4 +10,4 @@ Note: The system requires users to log in or register to view recommendations. T
 ![Detail](./images/detail_movie.png)
 ![User](./images/user_page.png)
 
-Note: Content-based filtering does not incorporate user ratings into its recommendation logic; instead, user ratings are utilized primarily for aesthetic purposes..
+Note: Content-based filtering does not incorporate user ratings into its recommendation logic; rather, users are required to submit ratings to simulate the experience of watching movies. These ratings are utilized primarily for aesthetic purposes.
