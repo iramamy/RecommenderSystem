@@ -54,7 +54,6 @@ def image_detail(request, movie_id):
     might_like_data = data[data['genres'].str.contains(keywords, regex=True)]
     different_data = data[~data['genres'].str.contains(keywords, regex=True)]
 
-
     top_12 = might_like_data.sample(12).to_dict('records')
     top_6 = different_data.sample(6).to_dict('records')
 
