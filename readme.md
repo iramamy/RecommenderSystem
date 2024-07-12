@@ -1,4 +1,5 @@
 # Content based filtering
+This project demonstrates the application of content-based filtering using the Alternating Least Squares (ALS) algorithm with the MovieLens small dataset. The system recommends movies based on their content characteristics, leveraging user ratings to enhance the recommendation quality.
 
 # Preview
 ![Login](./images/login.png)
