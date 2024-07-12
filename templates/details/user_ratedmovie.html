@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="content">
+  <div class="container pt-7">
+    <div class="liked mt-5">
+      <div class="container">
+        <div class="d-flex justify-content-between">
+          <h2 class="text-white fw-bold mb-5 title mb-0">Your history</h2>
+          <h5 class="text-white fw-bold mb-5 title">
+            <a href="{% url 'explore' %}" class="all-movies">All movies</a>
+          </h5>
+        </div>
+
+        <div class="row history">
+          {% for rated_movie in IdWithGenres %}
+          <div class="col-md-2 mb-0">
+            <div class="card position-relative">
+              <img
+                class="card-img-top"
+                src="https://raw.githubusercontent.com/iramamy/Movie-lens-images/main/images/{{ rated_movie.movieId }}.jpg"
+                alt="Not available"
+              />
+              <div class="px-2 py-3 lh-1">
+                <a
+                  href="{% url 'image_detail' movie_id=rated_movie.movieId %}"
+                  class="stretched-link text-decoration-none genre-title"
+                  >{{ rated_movie.genres }}</a
+                >
+                <div
+                  class="card-text genre d-flex justify-content-between mt-2"
+                >
+                  <span>Your rating:</span>
+                  <span class="star-rating">
+                    <i class="fa-regular fa-star"></i>
+                    ({{ rated_movie.rating }})
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="liked mt-5">
+      <div class="container">
+        <h2 class="text-white fw-bold mb-5 title">Recommended for you</h2>
+        <div class="row">
+          {% for image in top_12 %}
+          <div class="col-md-2 mb-0">
+            <div class="card position-relative">
+              <img
+                class="card-img-top"
+                src="https://raw.githubusercontent.com/iramamy/Movie-lens-images/main/images/{{ image.item_id }}.jpg"
+                alt="Not available"
+              />
+              <div class="px-2 py-3 lh-1">
+                <a
+                  href="{% url 'image_detail' movie_id=image.item_id %}"
+                  class="stretched-link text-decoration-none genre-title"
+                  >{{ image.genres }}</a
+                >
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

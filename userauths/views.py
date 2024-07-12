@@ -46,8 +46,17 @@ def image_detail(request, movie_id):
     
     image_data = data[data['item_id'] == movie_id].iloc[0]
 
-    top_12 = data.sample(12).to_dict('records')
-    top_6 = data.sample(6).to_dict('records')
+    get_genres = data[data['item_id']==movie_id]['genres'].values[0]
+    
+    keywords = get_genres.split(',')
+    keywords = '|'.join(keywords)
+    
+    might_like_data = data[data['genres'].str.contains(keywords, regex=True)]
+    different_data = data[~data['genres'].str.contains(keywords, regex=True)]
+
+
+    top_12 = might_like_data.sample(12).to_dict('records')
+    top_6 = different_data.sample(6).to_dict('records')
 
     try:
         user_review = UserReview.objects.get(

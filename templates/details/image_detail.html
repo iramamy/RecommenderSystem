@@ -31,9 +31,6 @@
                 <p class="mb-0">
                   <span class="fw-bold">Genre</span>: {{ images.genres }}
                 </p>
-                <!-- <p class="mb-0">
-                    <span class="fw-bold">Ratings</span>: genre here
-                  </p> -->
               </div>
               <div class="text-center mt-5 d-flex flex-column">
                 <form
@@ -42,12 +39,10 @@
                 >
                   {% csrf_token %}
 
-                  <!-- <div class="d-flex flex-column"> -->
                   <div>
                     <label>
                       {% if is_exist %}
                       <span class="fw-bold">Your rating</span>
-                      <span>({{ user_rating }})</span>
                       {% else %}
                       <span class="fw-bold">Rate this movie</span>
                       {% endif %}
@@ -146,9 +141,9 @@
                     <label for="rating1" title="0.5" class="half"></label>
                   </div>
 
-                  <!-- </div> -->
                   <div>
-                    {% if request.user.is_authenticated %} {% if is_exist %}
+                    {% if request.user.is_authenticated %}
+                    {% if is_exist %}
 
                     <button class="btn btn-outline-dark" type="submit">
                       Change
@@ -175,7 +170,7 @@
 
   <div class="liked mt-5">
     <div class="container">
-      <h2 class="text-white fw-bold mb-5 title">Recommended for you</h2>
+      <h2 class="text-white fw-bold mb-5 title">You might also like</h2>
       <div class="row">
         {% for image in top_12_images %}
         <div class="col-md-2 mb-0">
@@ -201,7 +196,7 @@
 
   <div class="liked mt-5">
     <div class="container">
-      <h2 class="text-white fw-bold mb-5 title">Want something new?</h2>
+      <h2 class="text-white fw-bold mb-5 title">Want something different?</h2>
       <div class="row">
         {% for image in top_6_images %}
         <div class="col-md-2 mb-0">
