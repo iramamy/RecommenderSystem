@@ -1,11 +1,6 @@
 import pickle
 import numpy as np
 
-# with open('movie_matrix.pkl', 'rb') as f:
-#     movie_matrix = pickle.load(f)
-
-# with open('movie_bias.pkl', 'rb') as f:
-#     movie_bias = pickle.load(f)
 
 def recommend_movies_for_user(
         user_movie_ids,
