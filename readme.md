@@ -12,3 +12,6 @@ Note: The system requires users to log in or register to view recommendations. T
 ![Filtering](./images/filtering.png)
 
 Note: Content-based filtering does not incorporate user ratings into its recommendation logic; rather, users are required to submit ratings to simulate the experience of watching movies. These ratings are utilized primarily for aesthetic purposes.
+
+# Data
+Data implemented can be found [here](https://github.com/iramamy/Movie-lens-images).
