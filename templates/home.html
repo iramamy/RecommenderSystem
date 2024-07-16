@@ -58,120 +58,25 @@
               >
                 <div class="accordion-body">
                   <div class="row">
-                    <div class="col-sm-4">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Animation
-                        </label>
+                    
+                      {% for genre in genres %}
+                      <div class="col-sm-4">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input filter-checkbox"
+                            type="checkbox"
+                            data-filter="genre"
+                            id="genreCheckbox-{{ genre }}"
+                            value="{{genre}}">
+                          <label
+                            class="form-check-label"
+                            for="genreCheckbox-{{ genre }}">
+                            {{genre}}
+                          </label>
+                        </div>
                       </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Children's
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Comedy
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Adventure
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Fantasy
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Romance
-                        </label>
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Drama
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Action
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Crime
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Thriller
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Horror
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Sci-Fi
-                        </label>
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Documentary
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          War
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Musical
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Mystery
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Film-Noir
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Western
-                        </label>
-                      </div>
-                    </div>
+                      {% endfor %}
+                        
                   </div>
                 </div>
               </div>
@@ -182,46 +87,18 @@
     </div>
   </header>
 
-  <!-- Liked movie -->
-  <div class="liked mt-5">
-    <div class="container">
-      <h2 class="text-white fw-bold mb-5 title">New movie</h2>
-      <div class="row">
-        {% for image in new_top_6 %}
-        <div class="col-lg-2 col-md-4 col-sm-6 mb-0">
-          <div class="card position-relative">
-            <img
-              class="card-img-top"
-              src="https://raw.githubusercontent.com/iramamy/Movie-lens-images/main/images/{{ image.item_id }}.jpg"
-              alt="Not available"
-            />
-            <div class="px-2 py-3 lh-1">
-              <a
-                href="{% url 'image_detail' movie_id=image.item_id %}"
-                class="stretched-link text-decoration-none genre-title"
-                >{{ image.genres}}</a
-              >
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-  <!-- // Liked movie -->
-
   <!-- All movies -->
-  <div class="recommended">
+  <div class="recommended my-5">
     <div class="container">
       <h2 class="text-white fw-bold mt-3 mb-5 title">All movies</h2>
-      <div class="row">
+      <div class="row" id="filtered-genre">
         {% for image in images %}
         <div class="col-lg-2 col-md-4 col-sm-6">
           <div class="card position-relative">
             <img
               class="card-img-top"
               src="https://raw.githubusercontent.com/iramamy/Movie-lens-images/main/images/{{ image.item_id }}.jpg"
-              alt="Card"
+              alt="Not available"
             />
             <div class="px-2 py-3 lh-1">
               <a
@@ -242,13 +119,15 @@
   <section>
     <div class="container">
       <div class="d-flex justify-content-center">
-        <nav aria-label="">
+        <nav aria-label="" id="pagination-container">
           {% if images.has_other_pages %}
           <ul class="pagination mb-0">
+
             <!-- previous button -->
             {% if images.has_previous %}
             <li class="page-item">
-              <a class="page-link" href="?page={{images.previous_page_number}}">
+              <a class="page-link"
+                href="?page={{images.previous_page_number}}">
                 <i class="fa-solid fa-arrow-left"></i>
               </a>
             </li>
@@ -282,14 +161,17 @@
     </div>
   </section>
   <!-- // pagination -->
+
 </section>
 
 <script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+
 <script>
   new Autocomplete("#autocomplete", {
     search: (input) => {
-      console.log(input);
+
       const url = `/auto-search/?keyword=${input}`;
+
       return new Promise((resolve) => {
         fetch(url)
           .then((response) => response.json())

@@ -1,0 +1,32 @@
+{% for image in images %}
+<div class="col-lg-2 col-md-4 col-sm-6">
+  <div class="card position-relative">
+    <img
+      class="card-img-top"
+      src="https://raw.githubusercontent.com/iramamy/Movie-lens-images/main/images/{{ image.item_id }}.jpg"
+      alt="Not available"
+    />
+    <div class="px-2 py-3 lh-1">
+      <a
+        href="{% url 'image_detail' movie_id=image.item_id %}"
+        class="stretched-link text-decoration-none genre-title"
+        >{{ image.genres}}</a
+      >
+    </div>
+  </div>
+</div>
+
+{% endfor %}
+
+<section class="mt-4">
+  <div class="container text-center">
+    <span class="text-white display-5 fw-bold" id="maxsize-text">No more movies</span>
+    <div id="spinner-box"></div>
+    <div id="loading-box">
+      <button type="button" class="btn btn-primary text-white" id="load-btn">
+        Show more
+      </button>
+    </div>
+  </div>
+</section>
+

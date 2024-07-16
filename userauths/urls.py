@@ -11,5 +11,6 @@ urlpatterns = [
     # Search
     path("search/", views.search, name='search'),
     path("auto-search/", views.auto_complete_search, name='auto_complete_search'),
+    path("filter/<int:number_movie>", views.filter_genre, name='filter'),
 
 ]

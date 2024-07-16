@@ -1,5 +1,5 @@
 .content, footer {
-  background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url(../images/header-background.jpg) center center no-repeat;
+  background: linear-gradient(to bottom right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
   background-size: cover;
 }
 
@@ -35,6 +35,10 @@
 
 .image_detail p {
   font-size: 11px;
+}
+
+.bg-background {
+  background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9));
 }
 
 
@@ -141,5 +145,4 @@ label:hover ~input:checked ~ label {
     width: 100% !important;
   }
 
-  
 }

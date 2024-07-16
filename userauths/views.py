@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import auth, messages
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 
 from .forms import UserRegisterForm
 from .models import UserAccount
@@ -23,20 +25,26 @@ data = pd.read_csv(
     )
 
 data['genres'] = data['genres'].str.replace('|', ', ')
+movie_genres = data['genres'].str.split(',').to_list()
+movie_genres = set([genre.strip() for g in movie_genres for genre in g])
+
 
 def explore(request):
 
-    top_6 = data.sample(6).to_dict('records')
-    all_movies = data.to_dict('records')
+    # Home
 
-    paginator = Paginator(all_movies, 12)
+    shuffled_data = data.sample(frac=1)
+
+    all_movies = shuffled_data.to_dict('records')
+
+    paginator = Paginator(all_movies, 24)
     page = request.GET.get('page')
     image_per_page = paginator.get_page(page)
     
     context = {
-        'new_top_6': top_6,
         'images': image_per_page,
-        'all_movies': all_movies
+        'all_movies': all_movies,
+        "genres": movie_genres
     }
 
     return render(request, 'home.html', context)
@@ -143,7 +151,7 @@ def search(request):
             df_filtered = data[data['title'].str.contains(keyword, case=False, regex=False)]
             all_movies = df_filtered.to_dict('records')
 
-            paginator = Paginator(all_movies, 12)
+            paginator = Paginator(all_movies, 24)
             page = request.GET.get('page')
             image_per_page = paginator.get_page(page)
             
@@ -155,7 +163,7 @@ def search(request):
 
             return render(request, 'details/search_result.html', context)
         
-    return render(request, 'details/search_result.html', {}) 
+    return redirect('explore')
 
 def auto_complete_search(request):
     keyword = request.GET.get("keyword", "").strip()
@@ -169,3 +177,31 @@ def auto_complete_search(request):
     }
 
     return JsonResponse(context)
+
+def filter_genre(request, number_movie):
+
+    genres = request.GET.getlist('genre[]')
+
+    if len(genres) > 0:
+
+        movie_by_genre = data[data['genres'].str.contains('|'.join(genres), regex=True)]
+        filtered_by_genre = movie_by_genre.iloc[0:number_movie]
+        
+        context = {
+            'images': filtered_by_genre.to_dict('records'),
+            'genres': genres
+        }   
+
+        new_data = render_to_string('async/filter.html', context)
+        pagination_data = render_to_string('async/pagination.html', context)
+        
+        is_all = True if number_movie > len(movie_by_genre) else False        
+
+        return JsonResponse({
+            'data': new_data,
+            'pagination': pagination_data,
+            'additional_data': context,
+            'max': is_all
+            })
+
+    return redirect('explore')

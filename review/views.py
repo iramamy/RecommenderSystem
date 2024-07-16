@@ -68,9 +68,6 @@ def user_ratedmovie(request):
         movie_bias
     )
 
-    print('User movide id watched', user_movie_ids)
-    print('User movide id recommended', get_recommendation_id)
-
     path = 'userauths/data/movies.dat'
     column_names = ['item_id', 'title', 'genres']
 
